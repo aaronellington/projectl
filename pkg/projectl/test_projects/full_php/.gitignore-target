@@ -1,0 +1,27 @@
+# System Files
+/.vscode/
+/.idea/
+.DS_Store
+
+# Temporary Files
+/var/
+
+# Disted Files
+/app/config/parameters.yml
+
+# PHP Files
+/vendor/
+.phpunit.result.cache
+.php_cs.cache
+.phpcs-cache
+/.env.local
+/.env.*.local
+
+# NPM Files
+/node_modules/
+npm-debug.log
+/public/build/
+
+# Project Specific Files
+pkg/projectl/test_projects/*/.gitignore
+pkg/projectl/test_projects/*/Makefile

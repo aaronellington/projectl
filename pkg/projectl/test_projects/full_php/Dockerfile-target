@@ -1,0 +1,12 @@
+FROM node:14-buster as nodeBuilder
+WORKDIR /build-staging
+COPY . .
+RUN make clean-full
+RUN make lint-npm test-npm build-npm
+
+FROM aaronellington/php-fpm-webserver:latest
+COPY . .
+RUN make clean-full
+COPY --from=nodeBuilder /build-staging/public/build/ ./public/build/
+RUN make lint-php test-php build-php-prod
+EXPOSE 80

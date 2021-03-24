@@ -1,0 +1,19 @@
+# System Files
+/.vscode/
+/.idea/
+.DS_Store
+
+# Temporary Files
+/var/
+
+# NPM Files
+/node_modules/
+npm-debug.log
+/resources/dist/
+
+# Go Files
+__debug_bin
+
+# Project Specific Files
+pkg/projectl/test_projects/*/.gitignore
+pkg/projectl/test_projects/*/Makefile

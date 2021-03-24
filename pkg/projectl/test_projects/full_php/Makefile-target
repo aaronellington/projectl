@@ -1,0 +1,62 @@
+.PHONY: help docker build build-npm build-php-prod build-php-test lint lint-npm lint-php test test-npm test-php clean clean-full copy-config post-lint
+
+SHELL=/bin/bash -o pipefail
+
+.DEFAULT_GOAL := help
+COMPOSER_BIN := $(shell composer config bin-dir 2> /dev/null)
+
+help: ## Display general help about this command
+	@echo 'Makefile targets:'
+	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' Makefile \
+	| sed -n 's/^\(.*\): \(.*\)##\(.*\)/    \1 :: \3/p' \
+	| column -t -c 1  -s '::'
+
+docker:
+	docker build -t simple:latest .
+
+build: build-npm build-php-prod ## Build the application
+
+build-npm:
+	npm install
+	npm run build
+
+build-php-prod:
+	SYMFONY_ENV=prod composer install --no-dev --optimize-autoloader --classmap-authoritative --no-progress --no-interaction
+	rsync -a --exclude='web/app_*.php' --exclude='var/cache' --exclude='/vendor/**/.git' app var web bin src vendor sass node_modules js composer.json httpsdocs
+
+build-php-test:
+	composer install --no-progress --no-interaction
+
+lint: lint-npm lint-php ## Lint the application
+
+lint-npm:
+	npm install
+	npm run lint
+
+lint-php: build-php-test
+	$(COMPOSER_BIN)/php-cs-fixer fix
+	$(COMPOSER_BIN)/phpcs
+	$(COMPOSER_BIN)/phpstan analyse src --level=max
+
+test: test-npm test-php ## Test the application
+
+test-npm:
+	npm install
+	npm run test
+
+test-php: build-php-test
+	$(COMPOSER_BIN)/phpunit tests
+
+clean: ## Remove files listed in .gitignore (possibly with some exceptions)
+	@git init 2> /dev/null
+	git clean -Xdff --exclude='!/app/config/parameters.yml'
+
+clean-full:
+	@git init 2> /dev/null
+	git clean -Xdff
+
+copy-config: ## Copy missing config files into place
+	[ -f /app/config/parameters.yml ] || cp /app/config/parameters.yml.dist /app/config/parameters.yml
+
+post-lint:
+	@git diff --exit-code --quiet || (echo 'There should not be any changes after the lint runs' && git status && exit 1;)
