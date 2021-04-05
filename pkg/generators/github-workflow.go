@@ -71,22 +71,5 @@ jobs:
         run: make lint test build post-lint
 `)
 
-	if service.Go.Enabled {
-		workflowFile.WriteString(`
-      - name: Convert coverage to lcov
-        uses: jandelgado/gcov2lcov-action@v1.0.0
-        with:
-          infile: var/coverage.txt
-          outfile: var/coverage.lcov
-
-      - name: Upload coverage to Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: var/coverage.lcov
-`)
-
-	}
-
 	return nil
 }

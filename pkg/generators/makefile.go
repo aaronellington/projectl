@@ -67,6 +67,7 @@ func getMakefilePayload(service *projector.Service, config *configuration.Config
 	addBuildTargets(service, payload)
 	addLintTargets(service, payload)
 	addTestTargets(service, payload)
+	addWatchTargets(service, config, payload)
 	addCleanTargets(service, payload)
 	addCopyConfigTarget(service, payload)
 	addPipelineTargets(service, payload)
@@ -75,14 +76,6 @@ func getMakefilePayload(service *projector.Service, config *configuration.Config
 	// TODO: add target for fix-php
 	// TODO: add target for fix-npm
 	// TODO: add target for fix-go
-	// TODO: add target for watch-npm
-	// TODO: add target for watch-go
-	// TODO: add target for test-npm
-
-	// TODO: add target for pytest ???
-
-	// TODO: add target for build-dev (devm)
-	// TODO: add target for deploy-localhost (devm)
 
 	return *payload
 }
@@ -284,6 +277,33 @@ func addTestTargets(service *projector.Service, payload *TemplatePayloadMakefile
 		payload.Targets = append(payload.Targets, targetTestGo)
 	}
 }
+
+func addWatchTargets(service *projector.Service, config *configuration.Config, payload *TemplatePayloadMakefile) {
+	if service.Npm.Enabled && service.Npm.HasScript("watch") {
+		targetTestNpm := &TemplateMakefileTarget{
+			Name: "watch-npm",
+			Commands: []string{
+				"clear",
+				"npm run watch",
+			},
+		}
+		payload.Targets = append(payload.Targets, targetTestNpm)
+	}
+
+	if service.Go.Enabled && config.GoHTTP {
+		// TODO: does not support multiple go targets
+		targetTestGo := &TemplateMakefileTarget{
+			Name: "watch-go",
+			Commands: []string{
+				"@cd ; go get github.com/codegangsta/gin",
+				"clear",
+				"gin --all --immediate --path . --build . --bin var/gin run",
+			},
+		}
+		payload.Targets = append(payload.Targets, targetTestGo)
+	}
+}
+
 func addLintTargets(service *projector.Service, payload *TemplatePayloadMakefile) {
 	targetLint := &TemplateMakefileTarget{
 		Name:    "lint",

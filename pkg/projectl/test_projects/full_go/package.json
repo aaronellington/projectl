@@ -1,6 +1,7 @@
 {
     "scripts": {
         "build": "",
+        "watch": "",
         "lint": ""
     }
 }

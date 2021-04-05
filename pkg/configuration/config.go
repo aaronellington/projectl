@@ -40,4 +40,5 @@ type Config struct {
 	DockerName   string   `json:"docker_name"`
 	DockerTarget string   `json:"docker_target"`
 	DockerPort   int      `json:"docker_port"`
+	GoHTTP       bool     `json:"go_http"`
 }
