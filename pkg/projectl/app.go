@@ -30,6 +30,7 @@ func (app *App) Execute() error {
 		generators.NewGitignore(service, config),
 		generators.NewMakefile(service, config),
 		&generators.GithubWorkflow{},
+		&generators.PHPConfig{},
 	}...)
 
 	if config.DockerName != "" {

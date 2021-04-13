@@ -257,7 +257,7 @@ func addTestTargets(service *projector.Service, payload *TemplatePayloadMakefile
 			Name:       "test-php",
 			PreTargets: []string{"build-php-test"},
 			Commands: []string{
-				"$(COMPOSER_BIN)/phpunit tests",
+				"$(COMPOSER_BIN)/phpunit src",
 			},
 		}
 		targetTest.PreTargets = append(targetTest.PreTargets, targetTestPHP.Name)

@@ -9,7 +9,6 @@ import (
 
 // Errors
 var (
-	ErrMissingConfigFile = errors.New("missing config file")
 	ErrInvalidConfigFile = errors.New("invalid config file")
 )
 
@@ -20,7 +19,7 @@ func NewConfig(configFilePath string) (*Config, error) {
 	// Open the config file
 	configFile, err := os.Open(configFilePath)
 	if err != nil {
-		return nil, fmt.Errorf("%w: %s", ErrMissingConfigFile, configFilePath)
+		return &Config{}, nil
 	}
 	defer configFile.Close()
 

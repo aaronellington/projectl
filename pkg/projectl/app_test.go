@@ -28,10 +28,6 @@ func TestExecute(t *testing.T) {
 			ExpectedError: nil,
 		},
 		{
-			Path:          buildPath("missing_config_file"),
-			ExpectedError: configuration.ErrMissingConfigFile,
-		},
-		{
 			Path:          buildPath("invalid_config_file"),
 			ExpectedError: configuration.ErrInvalidConfigFile,
 		},

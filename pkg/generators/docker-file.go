@@ -86,5 +86,7 @@ RUN make clean-full
 	}
 
 	file.WriteString(`RUN make lint-php test-php build-php-prod
+RUN mkdir var
+RUN chown www-data:www-data var
 `)
 }
