@@ -1,7 +1,10 @@
 package generators
 
 import (
+	"errors"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
 	"strings"
 	"text/template"
@@ -71,6 +74,7 @@ func getMakefilePayload(service *projector.Service, config *configuration.Config
 	addCleanTargets(service, payload)
 	addCopyConfigTarget(service, payload)
 	addPipelineTargets(service, payload)
+	addAnsibleTargets(payload)
 
 	// TODO: add target for fix
 	// TODO: add target for fix-php
@@ -97,9 +101,9 @@ func addDockerTargets(service *projector.Service, config *configuration.Config, 
 
 func addPipelineTargets(service *projector.Service, payload *TemplatePayloadMakefile) {
 	targetPostLint := &TemplateMakefileTarget{
-		Name: "post-lint",
+		Name: "git-change-check",
 		Commands: []string{
-			"@git diff --exit-code --quiet || (echo 'There should not be any changes after the lint runs' && git status && exit 1;)",
+			"@git diff --exit-code --quiet || (echo 'There should not be any changes at this point' && git status && exit 1;)",
 		},
 	}
 	payload.Targets = append(payload.Targets, targetPostLint)
@@ -354,4 +358,25 @@ func addLintTargets(service *projector.Service, payload *TemplatePayloadMakefile
 		targetLint.PreTargets = append(targetLint.PreTargets, targetLintGo.Name)
 		payload.Targets = append(payload.Targets, targetLintGo)
 	}
+}
+func addAnsibleTargets(payload *TemplatePayloadMakefile) {
+	files, err := ioutil.ReadDir("ansible/playbooks/")
+	if err != nil {
+		if !errors.Is(err, os.ErrNotExist) {
+			log.Fatal(err)
+		}
+	}
+	for _, file := range files {
+		if !strings.HasSuffix(file.Name(), ".yml") {
+			continue
+		}
+		payload.Targets = append(payload.Targets, &TemplateMakefileTarget{
+			Name:       "ansible-" + strings.TrimSuffix(file.Name(), ".yml"),
+			PreTargets: []string{"git-change-check"},
+			Commands: []string{
+				"time ansible-playbook ansible/playbooks/" + file.Name(),
+			},
+		})
+	}
+
 }

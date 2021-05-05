@@ -20,4 +20,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build
-        run: make lint test build post-lint
+        run: make lint test build git-change-check
