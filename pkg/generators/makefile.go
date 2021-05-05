@@ -374,6 +374,7 @@ func addAnsibleTargets(payload *TemplatePayloadMakefile) {
 			Name:       "ansible-" + strings.TrimSuffix(file.Name(), ".yml"),
 			PreTargets: []string{"git-change-check"},
 			Commands: []string{
+				"clear",
 				"time ansible-playbook ansible/playbooks/" + file.Name(),
 			},
 		})
