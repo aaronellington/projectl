@@ -49,4 +49,4 @@ clean-full:
 copy-config: ## Copy missing config files into place
 
 git-change-check:
-	@git diff --exit-code --quiet || (echo 'There should not be any changes after the lint runs' && git status && exit 1;)
+	@git diff --exit-code --quiet || (echo 'There should not be any changes at this point' && git status && exit 1;)
