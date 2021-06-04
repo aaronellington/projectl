@@ -60,7 +60,7 @@ watch-npm:
 watch-go:
 	@cd ; go get github.com/codegangsta/gin
 	clear
-	gin --all --immediate --path . --build . --bin var/gin run
+	gin --all --immediate --path . --build . --bin var/gin --port 8000 run
 
 clean: ## Remove files listed in .gitignore (possibly with some exceptions)
 	@git init 2> /dev/null

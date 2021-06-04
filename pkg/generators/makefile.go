@@ -301,7 +301,7 @@ func addWatchTargets(service *projector.Service, config *configuration.Config, p
 			Commands: []string{
 				"@cd ; go get github.com/codegangsta/gin",
 				"clear",
-				"gin --all --immediate --path . --build . --bin var/gin run",
+				fmt.Sprintf("gin --all --immediate --path . --build . --bin var/gin --port %d run", config.DockerPort),
 			},
 		}
 		payload.Targets = append(payload.Targets, targetTestGo)
