@@ -13,6 +13,7 @@ npm-debug.log
 
 # Go Files
 __debug_bin
+debug.test
 
 # Project Specific Files
 pkg/projectl/test_projects/*/.gitignore

@@ -109,6 +109,7 @@ func getGitignorePayload(service *projector.Service, config *configuration.Confi
 	if service.Go.Enabled {
 		goGitignoreValues := []string{
 			"__debug_bin",
+			"debug.test",
 		}
 
 		payload.Sections = append(payload.Sections, TemplateGitignoreSection{
