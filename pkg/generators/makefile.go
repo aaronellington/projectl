@@ -66,6 +66,7 @@ func getMakefilePayload(service *projector.Service, config *configuration.Config
 	}
 
 	addHelpTarget(service, payload)
+	addFullTargets(service, payload)
 	addDockerTargets(service, config, payload)
 	addBuildTargets(service, payload)
 	addLintTargets(service, payload)
@@ -76,12 +77,51 @@ func getMakefilePayload(service *projector.Service, config *configuration.Config
 	addPipelineTargets(service, payload)
 	addAnsibleTargets(payload)
 
-	// TODO: add target for fix
-	// TODO: add target for fix-php
-	// TODO: add target for fix-npm
-	// TODO: add target for fix-go
-
 	return *payload
+}
+
+func addFullTargets(service *projector.Service, payload *TemplatePayloadMakefile) {
+	payload.Targets = append(payload.Targets, &TemplateMakefileTarget{
+		Name: "full",
+		PreTargets: []string{
+			"lint",
+			"test",
+			"build",
+		},
+	})
+
+	if service.Go.Enabled {
+		payload.Targets = append(payload.Targets, &TemplateMakefileTarget{
+			Name: "full-go",
+			PreTargets: []string{
+				"lint-go",
+				"test-go",
+				"build-go",
+			},
+		})
+	}
+
+	if service.PHP.Enabled {
+		payload.Targets = append(payload.Targets, &TemplateMakefileTarget{
+			Name: "full-php",
+			PreTargets: []string{
+				"lint-php",
+				"test-php",
+				"build-php",
+			},
+		})
+	}
+
+	if service.Npm.Enabled {
+		payload.Targets = append(payload.Targets, &TemplateMakefileTarget{
+			Name: "full-npm",
+			PreTargets: []string{
+				"lint-npm",
+				"test-npm",
+				"build-npm",
+			},
+		})
+	}
 }
 
 func addDockerTargets(service *projector.Service, config *configuration.Config, payload *TemplatePayloadMakefile) {

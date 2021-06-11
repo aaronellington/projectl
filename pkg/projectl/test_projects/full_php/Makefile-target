@@ -1,4 +1,4 @@
-.PHONY: help docker build build-npm build-php-prod build-php-test lint lint-npm lint-php test test-npm test-php clean clean-full copy-config git-change-check
+.PHONY: help full full-php full-npm docker build build-npm build-php-prod build-php-test lint lint-npm lint-php test test-npm test-php clean clean-full copy-config git-change-check
 
 SHELL=/bin/bash -o pipefail
 
@@ -10,6 +10,12 @@ help: ## Display general help about this command
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' Makefile \
 	| sed -n 's/^\(.*\): \(.*\)##\(.*\)/    \1 :: \3/p' \
 	| column -t -c 1  -s '::'
+
+full: lint test build
+
+full-php: lint-php test-php build-php
+
+full-npm: lint-npm test-npm build-npm
 
 docker:
 	docker build -t simple:latest .

@@ -68,7 +68,7 @@ jobs:
 `)
 	workflowFile.WriteString(`
       - name: Build
-        run: make lint test build git-change-check
+        run: make full git-change-check
 `)
 
 	return nil
