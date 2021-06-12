@@ -21,7 +21,7 @@ func (dockerfile *Dockerfile) Generate(service *projector.Service) error {
 	}
 
 	if service.Npm.Enabled {
-		file.WriteString(`FROM node:14-buster as nodeBuilder
+		file.WriteString(`FROM node:16-buster as nodeBuilder
 WORKDIR /build-staging
 COPY . .
 RUN make clean-full

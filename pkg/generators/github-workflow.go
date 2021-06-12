@@ -39,7 +39,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 16
 `)
 	}
 
