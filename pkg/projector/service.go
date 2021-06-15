@@ -16,7 +16,7 @@ func NewService() (*Service, error) {
 		return nil, err
 	}
 
-	languageNpm, err := language.NewNpn()
+	languageNpm, err := language.NewNpm()
 	if err != nil {
 		return nil, err
 	}
