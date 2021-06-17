@@ -144,7 +144,7 @@ func addPipelineTargets(service *projector.Service, payload *TemplatePayloadMake
 		Name: "projectl",
 		Commands: []string{
 			"@cd ; go get github.com/aaronellington/projectl",
-			"projectl",
+			"$(shell go env GOPATH)/bin/projectl",
 		},
 	})
 
