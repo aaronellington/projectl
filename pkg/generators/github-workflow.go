@@ -20,6 +20,11 @@ func (githubWorkflow *GithubWorkflow) Generate(service *projector.Service) error
 		return err
 	}
 
+	goVersion := "1.16"
+	if service.Go.Enabled {
+		goVersion = service.Go.Version()
+	}
+
 	workflowFile.WriteString(`name: Main
 
 on:
@@ -34,21 +39,24 @@ jobs:
     steps:
 `)
 
+	workflowFile.WriteString(`
+      - name: Set up Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ` + goVersion + `
+`)
+
+	workflowFile.WriteString(`
+      - name: Install projectl
+        run: cd ; go get github.com/aaronellington/projectl
+`)
+
 	if service.Npm.Enabled {
 		workflowFile.WriteString(`
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
           node-version: 16
-`)
-	}
-
-	if service.Go.Enabled {
-		workflowFile.WriteString(`
-      - name: Set up Go
-        uses: actions/setup-go@v1
-        with:
-          go-version: ` + service.Go.Version() + `
 `)
 	}
 
@@ -68,7 +76,7 @@ jobs:
 `)
 	workflowFile.WriteString(`
       - name: Build
-        run: make full git-change-check
+        run: make full git-change-check projectl git-change-check
 `)
 
 	return nil

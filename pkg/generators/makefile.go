@@ -140,6 +140,14 @@ func addDockerTargets(service *projector.Service, config *configuration.Config, 
 }
 
 func addPipelineTargets(service *projector.Service, payload *TemplatePayloadMakefile) {
+	payload.Targets = append(payload.Targets, &TemplateMakefileTarget{
+		Name: "projectl",
+		Commands: []string{
+			"@cd ; go get github.com/aaronellington/projectl",
+			"projectl",
+		},
+	})
+
 	targetPostLint := &TemplateMakefileTarget{
 		Name: "git-change-check",
 		Commands: []string{
