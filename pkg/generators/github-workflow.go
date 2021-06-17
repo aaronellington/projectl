@@ -46,11 +46,6 @@ jobs:
           go-version: ` + goVersion + `
 `)
 
-	workflowFile.WriteString(`
-      - name: Install projectl
-        run: cd ; go get github.com/aaronellington/projectl
-`)
-
 	if service.Npm.Enabled {
 		workflowFile.WriteString(`
       - name: Set up Node
