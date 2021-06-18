@@ -59,7 +59,7 @@ COPY . .
 RUN make clean-full
 `)
 
-	if service.Npm.Enabled {
+	if service.Npm.Enabled && service.Npm.HasScript("build") {
 		file.WriteString("COPY --from=nodeBuilder /build-staging/resources/dist/ /build-staging/resources/dist/\n")
 	}
 	file.WriteString(`RUN make lint-go test-go build-go

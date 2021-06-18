@@ -43,13 +43,9 @@ type Npm struct {
 
 // HasScript checks if a script is defined
 func (languageNpm Npm) HasScript(targetName string) bool {
-	for scriptName := range languageNpm.packageJSON.Scripts {
-		if scriptName == targetName {
-			return true
-		}
-	}
+	script := languageNpm.packageJSON.Scripts[targetName]
 
-	return false
+	return script != ""
 }
 
 // HasDependency checks if the project has a dependency
