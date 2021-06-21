@@ -39,7 +39,12 @@ func (p EslintGenerator) Generate(service *projector.Service) error {
 		},
 	}
 
-	if service.Npm.HasDependency("typescript") {
+	if service.Npm.HasDependency("next") {
+		config.Extends = append(config.Extends, "next")
+		config.Extends = append(config.Extends, "next/core-web-vitals")
+	}
+
+	if service.Npm.HasDependency("@typescript-eslint/eslint-plugin") {
 		config.Extends = append(config.Extends, "plugin:@typescript-eslint/recommended")
 		config.Rules["@typescript-eslint/explicit-module-boundary-types"] = []string{"off"}
 		config.Rules["@typescript-eslint/no-unused-vars"] = []string{"off"}
