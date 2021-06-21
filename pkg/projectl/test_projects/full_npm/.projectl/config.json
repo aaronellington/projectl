@@ -1,0 +1,4 @@
+{
+    "docker_name": "simple",
+    "docker_port": 8000
+}

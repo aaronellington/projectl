@@ -1,0 +1,8 @@
+FROM node:16-buster as nodeBuilder
+WORKDIR /build-staging
+COPY . .
+RUN make clean-full
+RUN make lint-npm test-npm build-npm
+
+CMD ["npm", "run", "start"]
+EXPOSE 8000

@@ -34,6 +34,8 @@ RUN make lint-npm test-npm build-npm
 		dockerfile.modeGo(service, file)
 	} else if service.PHP.Enabled {
 		dockerfile.modePHP(service, file)
+	} else if service.Npm.Enabled {
+		dockerfile.modeNPM(service, file)
 	}
 
 	if dockerfile.Port != 0 {
@@ -88,5 +90,10 @@ RUN make clean-full
 	file.WriteString(`RUN make lint-php test-php build-php-prod
 RUN mkdir var
 RUN chown www-data:www-data var
+`)
+}
+
+func (dockerfile *Dockerfile) modeNPM(service *projector.Service, file *os.File) {
+	file.WriteString(`CMD ["npm", "run", "start"]
 `)
 }

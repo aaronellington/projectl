@@ -28,6 +28,10 @@ func TestExecute(t *testing.T) {
 			ExpectedError: nil,
 		},
 		{
+			Path:          buildPath("full_npm"),
+			ExpectedError: nil,
+		},
+		{
 			Path:          buildPath("invalid_config_file"),
 			ExpectedError: configuration.ErrInvalidConfigFile,
 		},
