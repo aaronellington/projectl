@@ -6,6 +6,10 @@
 # Temporary Files
 /var/
 
+# Environment Files
+/.env.local
+/.env.*.local
+
 # NPM Files
 /node_modules/
 npm-debug.log

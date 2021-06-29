@@ -66,6 +66,13 @@ func getGitignorePayload(service *projector.Service, config *configuration.Confi
 				Name:   "Disted Files",
 				Values: distedFiles,
 			},
+			{
+				Name: "Environment Files",
+				Values: []string{
+					"/.env.local",
+					"/.env.*.local",
+				},
+			},
 		},
 	}
 
@@ -78,8 +85,6 @@ func getGitignorePayload(service *projector.Service, config *configuration.Confi
 				".phpunit.result.cache",
 				".php_cs.cache",
 				".phpcs-cache",
-				"/.env.local",
-				"/.env.*.local",
 			},
 		})
 	}
