@@ -65,7 +65,7 @@ copy-config: ## Copy missing config files into place
 	[ -f /app/config/parameters.yml ] || cp /app/config/parameters.yml.dist /app/config/parameters.yml
 
 projectl:
-	@cd ; go get github.com/aaronellington/projectl
+	@go install github.com/aaronellington/projectl@latest
 	$(shell go env GOPATH)/bin/projectl
 
 git-change-check:

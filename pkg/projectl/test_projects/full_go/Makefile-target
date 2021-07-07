@@ -39,8 +39,8 @@ lint-npm:
 	npm run lint
 
 lint-go:
-	@cd ; go get golang.org/x/lint/golint
-	@cd ; go get golang.org/x/tools/cmd/goimports
+	@go install golang.org/x/lint/golint
+	@go install golang.org/x/tools/cmd/goimports
 	go get -d ./...
 	go mod tidy
 	gofmt -s -w .
@@ -64,7 +64,7 @@ watch-npm:
 	npm run watch
 
 watch-go:
-	@cd ; go get github.com/codegangsta/gin
+	@go install github.com/codegangsta/gin
 	clear
 	gin --all --immediate --path . --build . --bin var/gin --port 8000 run
 
@@ -79,7 +79,7 @@ clean-full:
 copy-config: ## Copy missing config files into place
 
 projectl:
-	@cd ; go get github.com/aaronellington/projectl
+	@go install github.com/aaronellington/projectl@latest
 	$(shell go env GOPATH)/bin/projectl
 
 git-change-check:

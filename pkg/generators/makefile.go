@@ -143,7 +143,7 @@ func addPipelineTargets(service *projector.Service, payload *TemplatePayloadMake
 	payload.Targets = append(payload.Targets, &TemplateMakefileTarget{
 		Name: "projectl",
 		Commands: []string{
-			"@cd ; go get github.com/aaronellington/projectl",
+			"@go install github.com/aaronellington/projectl@latest",
 			"$(shell go env GOPATH)/bin/projectl",
 		},
 	})
@@ -347,7 +347,7 @@ func addWatchTargets(service *projector.Service, config *configuration.Config, p
 		targetTestGo := &TemplateMakefileTarget{
 			Name: "watch-go",
 			Commands: []string{
-				"@cd ; go get github.com/codegangsta/gin",
+				"@go install github.com/codegangsta/gin@latest",
 				"clear",
 				fmt.Sprintf("gin --all --immediate --path . --build . --bin var/gin --port %d run", config.DockerPort),
 			},
@@ -393,8 +393,8 @@ func addLintTargets(service *projector.Service, payload *TemplatePayloadMakefile
 		targetLintGo := &TemplateMakefileTarget{
 			Name: "lint-go",
 			Commands: []string{
-				"@cd ; go get golang.org/x/lint/golint",
-				"@cd ; go get golang.org/x/tools/cmd/goimports",
+				"@go install golang.org/x/lint/golint@latest",
+				"@go install golang.org/x/tools/cmd/goimports@latest",
 				"go get -d ./...",
 				"go mod tidy",
 				"gofmt -s -w .",
