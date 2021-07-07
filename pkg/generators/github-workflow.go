@@ -73,7 +73,7 @@ jobs:
 `)
 	workflowFile.WriteString(`
       - name: Build
-        run: make full git-change-check projectl git-change-check
+        run: make full projectl git-change-check
 `)
 
 	return nil

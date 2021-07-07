@@ -27,4 +27,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build
-        run: make full git-change-check projectl git-change-check
+        run: make full projectl git-change-check
