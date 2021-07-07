@@ -32,6 +32,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
