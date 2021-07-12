@@ -3,7 +3,6 @@
 SHELL=/bin/bash -o pipefail
 
 .DEFAULT_GOAL := help
-COMPOSER_BIN := $(shell composer config bin-dir 2> /dev/null)
 
 help: ## Display general help about this command
 	@echo 'Makefile targets:'
@@ -40,9 +39,9 @@ lint-npm:
 	npm run lint
 
 lint-php: build-php-test
-	$(COMPOSER_BIN)/php-cs-fixer fix
-	$(COMPOSER_BIN)/phpcs
-	$(COMPOSER_BIN)/phpstan analyse src --level=max
+	$(shell composer config bin-dir)/php-cs-fixer fix
+	$(shell composer config bin-dir)/phpcs
+	$(shell composer config bin-dir)/phpstan analyse src --level=max
 
 test: test-npm test-php ## Test the application
 
@@ -51,7 +50,7 @@ test-npm:
 	npm run test
 
 test-php: build-php-test
-	$(COMPOSER_BIN)/phpunit src
+	$(shell composer config bin-dir)/phpunit src
 
 clean: ## Remove files listed in .gitignore (possibly with some exceptions)
 	@git init 2> /dev/null

@@ -61,9 +61,6 @@ func getMakefilePayload(service *projector.Service, config *configuration.Config
 		payload.Variables["GO_PATH"] = "$(shell go env GOPATH 2> /dev/null)"
 		payload.Variables["PATH"] = "$(GO_PATH)/bin:$(PATH)"
 	}
-	if service.PHP.Enabled {
-		payload.Variables["COMPOSER_BIN"] = "$(shell composer config bin-dir 2> /dev/null)"
-	}
 
 	addHelpTarget(service, payload)
 	addFullTargets(service, payload)
@@ -309,7 +306,7 @@ func addTestTargets(service *projector.Service, payload *TemplatePayloadMakefile
 			Name:       "test-php",
 			PreTargets: []string{"build-php-test"},
 			Commands: []string{
-				"$(COMPOSER_BIN)/phpunit src",
+				"$(shell composer config bin-dir)/phpunit src",
 			},
 		}
 		targetTest.PreTargets = append(targetTest.PreTargets, targetTestPHP.Name)
@@ -380,9 +377,9 @@ func addLintTargets(service *projector.Service, payload *TemplatePayloadMakefile
 			Name:       "lint-php",
 			PreTargets: []string{"build-php-test"},
 			Commands: []string{
-				"$(COMPOSER_BIN)/php-cs-fixer fix",
-				"$(COMPOSER_BIN)/phpcs",
-				"$(COMPOSER_BIN)/phpstan analyse src --level=max",
+				"$(shell composer config bin-dir)/php-cs-fixer fix",
+				"$(shell composer config bin-dir)/phpcs",
+				"$(shell composer config bin-dir)/phpstan analyse src --level=max",
 			},
 		}
 		targetLint.PreTargets = append(targetLint.PreTargets, targetLintPHP.Name)
