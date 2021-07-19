@@ -122,7 +122,7 @@ func addFullTargets(service *projector.Service, payload *TemplatePayloadMakefile
 }
 
 func addDockerTargets(service *projector.Service, config *configuration.Config, payload *TemplatePayloadMakefile) {
-	if !service.Docker.Enabled {
+	if config.DockerName == "" {
 		return
 	}
 

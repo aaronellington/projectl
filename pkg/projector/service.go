@@ -6,11 +6,6 @@ import (
 
 // NewService creates a new Projector instance
 func NewService() (*Service, error) {
-	languageDocker, err := language.NewDocker()
-	if err != nil {
-		return nil, err
-	}
-
 	languagePHP, err := language.NewPHP()
 	if err != nil {
 		return nil, err
@@ -27,10 +22,9 @@ func NewService() (*Service, error) {
 	}
 
 	return &Service{
-		Docker: languageDocker,
-		Go:     languageGo,
-		PHP:    languagePHP,
-		Npm:    languageNpm,
+		Go:  languageGo,
+		PHP: languagePHP,
+		Npm: languageNpm,
 	}, nil
 }
 
@@ -38,7 +32,6 @@ func NewService() (*Service, error) {
 type Service struct {
 	Generators  []Generator
 	DistedFiles []string
-	Docker      *language.Docker
 	Go          *language.Go
 	Npm         *language.Npm
 	PHP         *language.PHP
