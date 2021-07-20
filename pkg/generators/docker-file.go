@@ -11,10 +11,15 @@ import (
 type Dockerfile struct {
 	Port   int
 	Target string
+	Custom bool
 }
 
 // Generate the config file
 func (dockerfile *Dockerfile) Generate(service *projector.Service) error {
+	if dockerfile.Custom {
+		return nil
+	}
+
 	file, err := os.Create("Dockerfile")
 	if err != nil {
 		return err

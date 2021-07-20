@@ -34,10 +34,11 @@ func NewConfig(configFilePath string) (*Config, error) {
 
 // Config of projectl
 type Config struct {
-	Gitignore    []string `json:"gitignore"`
-	DistedFiles  []string `json:"disted_files"`
-	DockerName   string   `json:"docker_name"`
-	DockerTarget string   `json:"docker_target"`
-	DockerPort   int      `json:"docker_port"`
-	GoHTTP       bool     `json:"go_http"`
+	Gitignore        []string `json:"gitignore"`
+	DistedFiles      []string `json:"disted_files"`
+	DockerName       string   `json:"docker_name"`
+	DockerTarget     string   `json:"docker_target"`
+	DockerPort       int      `json:"docker_port"`
+	GoHTTP           bool     `json:"go_http"`
+	CustomDockerFile bool     `json:"custom_dockerfile"`
 }

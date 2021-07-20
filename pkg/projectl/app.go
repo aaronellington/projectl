@@ -38,6 +38,7 @@ func (app *App) Execute() error {
 		service.Generators = append(service.Generators, &generators.Dockerfile{
 			Port:   config.DockerPort,
 			Target: config.DockerTarget,
+			Custom: config.CustomDockerFile,
 		})
 	}
 
