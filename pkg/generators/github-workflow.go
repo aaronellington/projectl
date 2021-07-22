@@ -25,7 +25,7 @@ func (githubWorkflow *GithubWorkflow) Generate(service *projector.Service) error
 		goVersion = service.Go.Version()
 	}
 
-	workflowFile.WriteString(`name: Main
+	_, _ = workflowFile.WriteString(`name: Main
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
     steps:
 `)
 
-	workflowFile.WriteString(`
+	_, _ = workflowFile.WriteString(`
       - name: Set up Go
         uses: actions/setup-go@v1
         with:
@@ -49,7 +49,7 @@ jobs:
 `)
 
 	if service.Npm.Enabled {
-		workflowFile.WriteString(`
+		_, _ = workflowFile.WriteString(`
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
@@ -58,7 +58,7 @@ jobs:
 	}
 
 	if service.PHP.Enabled {
-		workflowFile.WriteString(`
+		_, _ = workflowFile.WriteString(`
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -67,11 +67,11 @@ jobs:
 `)
 	}
 
-	workflowFile.WriteString(`
+	_, _ = workflowFile.WriteString(`
       - name: Check out code
         uses: actions/checkout@v2
 `)
-	workflowFile.WriteString(`
+	_, _ = workflowFile.WriteString(`
       - name: Build
         run: make full projectl git-change-check
 `)

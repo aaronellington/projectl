@@ -57,7 +57,7 @@ func (p EslintGenerator) Generate(service *projector.Service) error {
 
 	fileBytes, _ := json.MarshalIndent(config, "", "\t")
 
-	os.WriteFile(".eslintrc.json", fileBytes, 0655)
+	_ = os.WriteFile(".eslintrc.json", fileBytes, 0655)
 
 	return nil
 }

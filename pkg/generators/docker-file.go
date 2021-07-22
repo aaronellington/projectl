@@ -26,7 +26,7 @@ func (dockerfile *Dockerfile) Generate(service *projector.Service) error {
 	}
 
 	if service.Npm.Enabled {
-		file.WriteString(`FROM node:16-buster as nodeBuilder
+		_, _ = file.WriteString(`FROM node:16-buster as nodeBuilder
 WORKDIR /build-staging
 COPY . .
 RUN make clean-full
@@ -44,7 +44,7 @@ RUN make lint-npm test-npm build-npm
 	}
 
 	if dockerfile.Port != 0 {
-		file.WriteString(fmt.Sprintf("EXPOSE %d\n", dockerfile.Port))
+		_, _ = file.WriteString(fmt.Sprintf("EXPOSE %d\n", dockerfile.Port))
 	}
 
 	return nil
@@ -60,16 +60,16 @@ func (dockerfile *Dockerfile) modeGo(service *projector.Service, file *os.File) 
 		}
 	}
 
-	file.WriteString(`FROM golang:` + service.Go.Version() + `-buster as goBuilder
+	_, _ = file.WriteString(`FROM golang:` + service.Go.Version() + `-buster as goBuilder
 WORKDIR /build-staging
 COPY . .
 RUN make clean-full
 `)
 
 	if service.Npm.Enabled && service.Npm.HasScript("build") {
-		file.WriteString("COPY --from=nodeBuilder /build-staging/resources/dist/ /build-staging/resources/dist/\n")
+		_, _ = file.WriteString("COPY --from=nodeBuilder /build-staging/resources/dist/ /build-staging/resources/dist/\n")
 	}
-	file.WriteString(`RUN make lint-go test-go build-go
+	_, _ = file.WriteString(`RUN make lint-go test-go build-go
 
 FROM debian:buster
 RUN apt-get update
@@ -77,28 +77,28 @@ RUN apt-get install -y ca-certificates
 WORKDIR /app
 `)
 
-	file.WriteString(`COPY --from=goBuilder /build-staging/var/` + targetBin + ` ./` + targetBin + `
+	_, _ = file.WriteString(`COPY --from=goBuilder /build-staging/var/` + targetBin + ` ./` + targetBin + `
 CMD ["./` + targetBin + `"]
 `)
 }
 
 func (dockerfile *Dockerfile) modePHP(service *projector.Service, file *os.File) {
-	file.WriteString(`FROM aaronellington/php-fpm-webserver:latest
+	_, _ = file.WriteString(`FROM aaronellington/php-fpm-webserver:latest
 COPY . .
 RUN make clean-full
 `)
 
 	if service.Npm.Enabled {
-		file.WriteString("COPY --from=nodeBuilder /build-staging/public/build/ ./public/build/\n")
+		_, _ = file.WriteString("COPY --from=nodeBuilder /build-staging/public/build/ ./public/build/\n")
 	}
 
-	file.WriteString(`RUN make lint-php test-php build-php-prod
+	_, _ = file.WriteString(`RUN make lint-php test-php build-php-prod
 RUN mkdir var
 RUN chown www-data:www-data var
 `)
 }
 
 func (dockerfile *Dockerfile) modeNPM(service *projector.Service, file *os.File) {
-	file.WriteString(`CMD ["npm", "run", "start"]
+	_, _ = file.WriteString(`CMD ["npm", "run", "start"]
 `)
 }
