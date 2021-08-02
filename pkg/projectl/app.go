@@ -11,7 +11,7 @@ type App struct{}
 
 // Execute the app
 func (app *App) Execute() error {
-	config, err := configuration.NewConfig(".projectl/config.json")
+	config, err := configuration.NewConfig(".projectl.json")
 	if err != nil {
 		return err
 	}
