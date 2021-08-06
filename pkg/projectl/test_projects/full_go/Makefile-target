@@ -24,7 +24,7 @@ docker:
 build: build-npm build-go ## Build the application
 
 build-npm:
-	npm install
+	npm install --no-save
 	npm run build
 
 build-go:
@@ -35,7 +35,7 @@ build-go:
 lint: lint-npm lint-go ## Lint the application
 
 lint-npm:
-	npm install
+	npm install --no-save
 	npm run lint
 
 lint-go:
@@ -51,7 +51,7 @@ lint-go:
 test: test-npm test-go ## Test the application
 
 test-npm:
-	npm install
+	npm install --no-save
 	npm run test
 
 test-go:

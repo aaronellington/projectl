@@ -227,7 +227,7 @@ func addBuildTargets(service *projector.Service, payload *TemplatePayloadMakefil
 		targetBuildNpm := &TemplateMakefileTarget{
 			Name: "build-npm",
 			Commands: []string{
-				"npm install",
+				"npm install --no-save",
 				"npm run build",
 			},
 		}
@@ -293,7 +293,7 @@ func addTestTargets(service *projector.Service, payload *TemplatePayloadMakefile
 		targetTestNpm := &TemplateMakefileTarget{
 			Name: "test-npm",
 			Commands: []string{
-				"npm install",
+				"npm install --no-save",
 				"npm run test",
 			},
 		}
@@ -364,7 +364,7 @@ func addLintTargets(service *projector.Service, payload *TemplatePayloadMakefile
 		targetLanguage := &TemplateMakefileTarget{
 			Name: "lint-npm",
 			Commands: []string{
-				"npm install",
+				"npm install --no-save",
 				"npm run lint",
 			},
 		}

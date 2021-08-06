@@ -20,19 +20,19 @@ docker:
 build: build-npm ## Build the application
 
 build-npm:
-	npm install
+	npm install --no-save
 	npm run build
 
 lint: lint-npm ## Lint the application
 
 lint-npm:
-	npm install
+	npm install --no-save
 	npm run lint
 
 test: test-npm ## Test the application
 
 test-npm:
-	npm install
+	npm install --no-save
 	npm run test
 
 watch-npm:

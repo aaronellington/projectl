@@ -22,7 +22,7 @@ docker:
 build: build-npm build-php-prod ## Build the application
 
 build-npm:
-	npm install
+	npm install --no-save
 	npm run build
 
 build-php-prod:
@@ -35,7 +35,7 @@ build-php-test:
 lint: lint-npm lint-php ## Lint the application
 
 lint-npm:
-	npm install
+	npm install --no-save
 	npm run lint
 
 lint-php: build-php-test
@@ -46,7 +46,7 @@ lint-php: build-php-test
 test: test-npm test-php ## Test the application
 
 test-npm:
-	npm install
+	npm install --no-save
 	npm run test
 
 test-php: build-php-test
