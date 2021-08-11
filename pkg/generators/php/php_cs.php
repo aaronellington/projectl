@@ -7,6 +7,7 @@ $config = new PhpCsFixer\Config();
 return $config->setRules([
     '@PSR2' => true,
     'array_syntax' => ['syntax' => 'short'],
+    'binary_operator_spaces' => ['align_double_arrow' => true],
     'blank_line_before_statement' => ['statements' => ['return']],
     'global_namespace_import' => true,
     'native_function_casing' => true,
